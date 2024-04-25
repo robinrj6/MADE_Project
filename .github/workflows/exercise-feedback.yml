@@ -1,6 +1,7 @@
 name: Exercise Feedback
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
