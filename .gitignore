@@ -3,3 +3,5 @@
 !/data/.gitkeep
 /exercises/*.csv
 /exercises/*.sqlite
+!/project/.gitkeep
+!/project/*.md
