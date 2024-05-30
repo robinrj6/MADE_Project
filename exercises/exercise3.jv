@@ -3,7 +3,7 @@ pipeline GoodsPipeline{
     GoodsExtractor 
         -> GoodsTextFileInterpreter
         -> GoodsCSVInterpreter
-        -> MetaRowsDeleter
+        // -> MetaRowsDeleter
         -> HeaderSequenceWriter
         -> HeaderSequenceWriter2
         -> GoodsTableInterpreter
@@ -21,9 +21,9 @@ pipeline GoodsPipeline{
         delimiter:';';
     }
 
-    block MetaRowsDeleter oftype RowDeleter  {
-            delete: [row 41337, row 41338, row 41339, row 8, row 7, row 6, row 5, row 4, row 3, row 2, row 1] ;
-    }
+    // block MetaRowsDeleter oftype RowDeleter  {
+    //         delete: [row 41337, row 41338, row 41339, row 8, row 7, row 6, row 5, row 4, row 3, row 2, row 1] ;
+    // }
     
     block HeaderSequenceWriter oftype CellWriter {
         at: range A1:E1;
