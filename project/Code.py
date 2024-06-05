@@ -3,14 +3,14 @@ import requests
 import pandas as pd
 
 df1 = pd.read_csv(
-    'https://zenodo.org/records/4723476/files/Guetschow-et-al-2021-PRIMAP-crf96_2021-v1.csv?download=1',
+    'https://zenodo.org/records/4723476/files/Guetschow-et-al-2021-PRIMAP-crf_2021-v1.csv?download=1',
     sep=','
 )
 
 df1 = df1[["area (ISO3)", 
            "entity", 
            "unit", 
-           "category (IPCC1996)", 
+           "category (IPCC2006)", 
            "1996", 
            "1997", 
            "1998", 
@@ -37,8 +37,9 @@ df1 = df1[["area (ISO3)",
            "2019",]]
 
 df1=df1.dropna()
+df_zero_category = df1.loc[df1['category (IPCC2006)'] == '0']
 
-df1.to_sql('PRIMAP', 'sqlite:///../data/PRIMAP.sqlite',
+df_zero_category.to_sql('PRIMAP', 'sqlite:///../data/PRIMAP.sqlite',
            if_exists='replace', index=False)
 
 
@@ -63,5 +64,7 @@ df2 = df2[["Country",
            "icd11l3", 
            "Disease"]]
 
-df2.to_sql('Diseases', 'sqlite:///../data/diseases.sqlite',
+df2_before_2020 = df2.loc[df2['Year'] < 2020]
+
+df2_before_2020.to_sql('Diseases', 'sqlite:///../data/diseases.sqlite',
            if_exists='replace', index=False)
