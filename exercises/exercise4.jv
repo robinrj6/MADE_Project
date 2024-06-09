@@ -94,7 +94,7 @@ pipeline TemperaturePipeline{
         use: CelsiusToFahrenheit;
     }
 
-    constraint GeraetScale on decimal:
+    constraint GeraetScale on integer:
         value > 0;
 
     block TemperatureLoader oftype SQLiteLoader{
