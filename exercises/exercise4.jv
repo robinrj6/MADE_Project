@@ -1,0 +1,104 @@
+pipeline TemperaturePipeline{
+
+    TemperatureExtractor 
+        -> ZipArchiveInterpreter
+        -> TemperatureTextFilePicker
+        -> TemperatureTextFileInterpreter
+        -> TemperatureCSVInterpreter
+        -> GeraetHeaderRewriter
+        -> HerstellerHeaderRewriter
+        -> ModelHeaderRewriter
+        -> MonatHeaderRewriter
+        -> TemperatureHeaderRewriter
+        -> BatteryHeaderRewriter
+        -> TemperatureTableInterpreter
+        -> TemperatureTransformer1
+        -> TemperatureTransformer2
+        -> TemperatureLoader;
+    
+    block TemperatureExtractor oftype HttpExtractor{
+        url : "https://www.mowesta.com/data/measure/mowesta-dataset-20221107.zip";    
+    }
+
+    block ZipArchiveInterpreter oftype ArchiveInterpreter {
+        archiveType: "zip";
+    }
+
+    block TemperatureTextFilePicker oftype FilePicker {
+        path: "/data.csv";
+    }
+    
+    block TemperatureTextFileInterpreter oftype TextFileInterpreter{
+    }
+
+
+    block TemperatureCSVInterpreter oftype CSVInterpreter{
+        delimiter:';';
+    }
+
+    valuetype GeraetScaler oftype decimal {
+        constraints: [ GeraetScale ];
+    }
+
+    block GeraetHeaderRewriter oftype CellWriter {
+        at: cell A1;
+        write: ["id"];
+    }
+    block HerstellerHeaderRewriter oftype CellWriter {
+        at: cell B1;
+        write: ["producer"];
+    }
+    block ModelHeaderRewriter oftype CellWriter {
+        at: cell C1;
+        write: ["model"];
+    }
+    block MonatHeaderRewriter oftype CellWriter {
+        at: cell D1;
+        write: ["month"];
+    }
+    block TemperatureHeaderRewriter oftype CellWriter {
+        at: cell E1;
+        write: ["temperature"];
+    }
+    block BatteryHeaderRewriter oftype CellWriter {
+        at: cell J1;
+        write: ["battery_temperature"];
+    }
+
+    transform CelsiusToFahrenheit  {
+        from tempCelsius oftype decimal;
+        to tempFahrenheit  oftype decimal;
+        tempFahrenheit : (tempCelsius * 9/5) + 32;
+    }
+
+    block TemperatureTableInterpreter oftype TableInterpreter{
+        header: true;
+        columns: [
+            "id" oftype GeraetScaler,
+            "producer" oftype text, 
+            "model" oftype text, 
+            "month" oftype integer, 
+            "temperature" oftype decimal, 
+            "battery_temperature" oftype decimal
+        ];
+    }
+
+    block TemperatureTransformer1 oftype TableTransformer {
+        inputColumns: ["temperature"];  // to satisfy the input of the transform
+        outputColumn: "temperature"; // might also overwrite the input column if name is identical
+        use: CelsiusToFahrenheit;
+    }
+    block TemperatureTransformer2 oftype TableTransformer {
+        inputColumns: ["battery_temperature"];  // to satisfy the input of the transform
+        outputColumn: "battery_temperature"; // might also overwrite the input column if name is identical
+        use: CelsiusToFahrenheit;
+    }
+
+    constraint GeraetScale on decimal:
+        value > 0;
+
+    block TemperatureLoader oftype SQLiteLoader{
+        table: "temperatures";
+        file: "temperatures.sqlite";
+    }
+}
