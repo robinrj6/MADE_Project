@@ -74,7 +74,7 @@ pipeline TemperaturePipeline{
     block TemperatureTableInterpreter oftype TableInterpreter{
         header: true;
         columns: [
-            "id" oftype GeraetScaler,
+            "id" oftype GeraetIDScaler,
             "producer" oftype text, 
             "model" oftype text, 
             "month" oftype integer, 
@@ -94,7 +94,12 @@ pipeline TemperaturePipeline{
         use: CelsiusToFahrenheit;
     }
 
-    constraint GeraetScale on integer:
+    valuetype GeraetIDScaler oftype integer {
+            constraints: [
+                GeraetScale,
+            ];  
+        }
+    constraint GeraetScale on decimal:
         value > 0;
 
     block TemperatureLoader oftype SQLiteLoader{
