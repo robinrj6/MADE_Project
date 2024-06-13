@@ -31,3 +31,5 @@ def run_tests():
     if test_store_exists():
         test_table_exists('PRIMAP')
         test_table_exists('Diseases')
+        
+run_tests()
