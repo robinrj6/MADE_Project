@@ -24,4 +24,4 @@ jobs:
       - name: Exercise tests
         id: tests
         run: |
-          ./project/tests.sh
+          tests.sh
