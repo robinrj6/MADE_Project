@@ -18,7 +18,7 @@ jobs:
       - name: Checkout tests
         uses: actions/checkout@v3
         with:
-          repository: robinrj6/project
+          repository: robinrj6/MADE_Project
           path: tests.sh
 
       - name: Exercise tests
