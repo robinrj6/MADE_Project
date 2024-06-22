@@ -17,8 +17,8 @@ jobs:
       
       - name: List contents of the project directory
         run: ls -la
-        working-directory: main
-        
+        working-directory: project
+
       # - name: Checkout tests
       #   uses: actions/checkout@v3
       #   with:
