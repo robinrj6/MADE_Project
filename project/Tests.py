@@ -13,7 +13,7 @@ def test_store_exists():
     
 # test table exists or not
 def test_table_exists(name):
-    conn = sqlite3.connect('../data/Store1.sqlite')
+    conn = sqlite3.connect('../data/Store.sqlite')
     cursor = conn.cursor()
 
     try:
