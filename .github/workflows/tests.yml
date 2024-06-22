@@ -26,7 +26,8 @@ jobs:
         working-directory: ./project
 
       - name: Make tests.sh executable
-        run: chmod +x project/tests.sh
+        run: chmod +x tests.sh
+        working-directory: ./project
 
       - name: Exercise tests
         id: tests
