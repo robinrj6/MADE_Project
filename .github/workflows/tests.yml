@@ -30,3 +30,4 @@ jobs:
       - name: Exercise tests
         id: tests
         run: ./project/tests.sh
+        working-directory: ./data
