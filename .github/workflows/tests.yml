@@ -21,6 +21,9 @@ jobs:
           repository: robinrj6/MADE_Project
           path: ./project
 
+      - name: Make tests.sh executable
+        run: chmod +x ./project/tests.sh
+  
       - name: Exercise tests
         id: tests
         run: |
