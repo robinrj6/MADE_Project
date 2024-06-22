@@ -6,7 +6,7 @@ import sys
 
 
 def test_store_exists():
-    entries = os.listdir('.')
+    entries = os.listdir('./data')
 
     # Filter out files from directories
     files = [entry for entry in entries if os.path.isfile(entry)]
