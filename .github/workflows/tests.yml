@@ -20,6 +20,9 @@ jobs:
         with:
           repository: robinrj6/MADE_Project
           path: ./project
+          
+      - name: List contents of the project directory
+        run: ls -la ./project
 
       - name: Make tests.sh executable
         run: chmod +x ./project/tests.sh
