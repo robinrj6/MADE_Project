@@ -7,7 +7,7 @@ import sys
 
 def test_store_exists():
     print(os.getcwd())
-    if os.path.exists('../data/Store.sqlite'):
+    if os.path.exists('../../data/Store.sqlite'):
         print('Store found Successfully')
         return True
     else:
