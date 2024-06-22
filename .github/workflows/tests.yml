@@ -22,7 +22,7 @@ jobs:
           path: project
 
       - name: List contents of the project directory
-        run: ls -la project
+        run: ls -la ./project/
 
       - name: Make tests.sh executable
         run: chmod +x ./project/tests.sh
