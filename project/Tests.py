@@ -6,7 +6,7 @@ import sys
 
 
 def test_store_exists():
-    if os.path.exists('./data/Store.sqlite'):
+    if os.path.exists('../data/Store.sqlite'):
         print('Store found Successfully')
         return True
     else:
@@ -18,7 +18,7 @@ def test_store_exists():
 
 
 def test_table_exists(name):
-    conn = sqlite3.connect('./data/Store.sqlite')
+    conn = sqlite3.connect('../data/Store.sqlite')
     cursor = conn.cursor()
 
     try:
