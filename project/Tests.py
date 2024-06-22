@@ -6,7 +6,15 @@ import sys
 
 
 def test_store_exists():
-    print(os.getcwd())
+    entries = os.listdir('.')
+
+    # Filter out files from directories
+    files = [entry for entry in entries if os.path.isfile(entry)]
+
+    # Print the list of files
+    print("Files in the current directory:")
+    for file in files:
+        print(file)
     if os.path.exists('./data/Store.sqlite'):
         print('Store found Successfully')
         return True
