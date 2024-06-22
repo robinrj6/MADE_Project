@@ -1,6 +1,6 @@
 import os
 import sqlite3
-
+import sys
 
 # test functions
 def test_store_exists():
@@ -9,15 +9,20 @@ def test_store_exists():
         return True
     else:
         print('Store not found')
-        return False
+        sys.exit(1) 
     
 # test table exists or not
 def test_table_exists(name):
     conn = sqlite3.connect('../data/Store1.sqlite')
     cursor = conn.cursor()
 
-    cursor.execute(f"SELECT * FROM {name};")
-    result = cursor.fetchone()
+    try:
+        cursor.execute(f"SELECT * FROM {name};")
+        result = cursor.fetchone()
+    except sqlite3.OperationalError as e:
+        print(f"Error: {e}. Table {name} does not exist.")
+        conn.close()
+        sys.exit(1)
 
     conn.close()
 
@@ -25,11 +30,14 @@ def test_table_exists(name):
         print(f"Table {name} exists.")
     else:
         print(f"Table {name} does not exist.")
+        sys.exit(1)
     
 # run tests
 def run_tests():
     if test_store_exists():
         test_table_exists('PRIMAP')
         test_table_exists('Diseases')
+    else:
+        sys.exit(1)
         
 run_tests()
