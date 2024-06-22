@@ -22,7 +22,7 @@ jobs:
           path: ./project
 
       - name: Make tests.sh executable
-        run: chmod +x ./project/tests.sh
+        run: chmod +x ./tests.sh
   
       - name: Exercise tests
         id: tests
