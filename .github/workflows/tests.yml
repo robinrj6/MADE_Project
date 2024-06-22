@@ -31,4 +31,3 @@ jobs:
         id: tests
         run: |
           project/tests.sh
-        working-directory: ./project
