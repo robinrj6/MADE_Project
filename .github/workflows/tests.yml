@@ -29,5 +29,5 @@ jobs:
 
       - name: Exercise tests
         id: tests
-        run: tests.sh
+        run: /tests.sh
         working-directory: ./project
