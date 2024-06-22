@@ -22,7 +22,7 @@ jobs:
 
       - name: List contents of the project directory
         run: ls -la
-        working-directory: project
+        working-directory: ./project
 
 
       # - name: List contents of the project directory
