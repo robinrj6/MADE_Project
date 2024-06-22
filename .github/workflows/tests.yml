@@ -15,15 +15,15 @@ jobs:
         with:
           path: main
       
+      - name: Checkout tests
+        uses: actions/checkout@v3
+        with:
+          repository: robinrj6/MADE_Project
+
       - name: List contents of the project directory
         run: ls -la
         working-directory: project
 
-      # - name: Checkout tests
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: robinrj6/MADE_Project
-      #     path: ./project
 
       # - name: List contents of the project directory
       #   run: ls -la
