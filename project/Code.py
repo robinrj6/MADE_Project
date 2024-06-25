@@ -93,4 +93,3 @@ df2_before_2020 = df2.loc[df2['Year'] < 2020]
 
 
 load('Diseases', df2_before_2020)
-run_tests()
