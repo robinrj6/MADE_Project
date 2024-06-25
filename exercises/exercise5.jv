@@ -1,0 +1,69 @@
+pipeline BusGTFSPipeline{
+
+    BusGTFSExtractor
+    ->BusStopTextFilePicker
+    ->BusStopTextFileInterpreter
+    ->BusStopCSVInterpreter
+    ->BusStopTableInterpreter
+    ->BusStopLoader
+    ;
+
+    block BusGTFSExtractor oftype GTFSExtractor{
+        url : "https://gtfs.rhoenenergie-bus.de/GTFS.zip";    
+    }
+
+    block BusStopTextFilePicker oftype FilePicker {
+        path: "/stops.txt";
+    }
+
+    block BusStopTextFileInterpreter oftype TextFileInterpreter{
+        encoding: "utf8";
+    }
+
+    block BusStopCSVInterpreter oftype CSVInterpreter{
+        delimiter: ",";
+        enclosing: '"';
+    }
+
+    block BusStopTableInterpreter oftype TableInterpreter{
+        header: true;
+        columns: [
+            "stop_id" oftype integer,
+            "stop_name" oftype text,
+            "stop_lat" oftype CordValidator,
+            "stop_lon" oftype CordValidator,
+            "zone_id" oftype ZoneFilter,
+        ];
+    }
+
+
+    valuetype ZoneFilter oftype integer {
+        constraints: [
+            ZoneIDFilter,
+        ];  
+    }
+
+    constraint ZoneIDFilter on integer :
+        value == 1645;
+    
+
+    valuetype CordValidator oftype decimal {
+        constraints: [
+            CordinateValidator,
+        ];  
+    }
+
+    constraint CordinateValidator oftype RangeConstraint {
+        lowerBound: -90.0;
+        upperBound: 90.0;
+    }
+
+
+
+
+    block BusStopLoader oftype SQLiteLoader{
+        table: "stops";
+        file: "gtfs.sqlite";
+    }
+
+}
