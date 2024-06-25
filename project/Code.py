@@ -3,8 +3,6 @@ import requests
 import pandas as pd
 import os
 
-from Tests import run_tests
-
 # Function to read data from a source
 def getData(url, sep):
     df = pd.read_csv(url, sep=sep)
