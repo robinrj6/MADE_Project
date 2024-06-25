@@ -1,5 +1,4 @@
 #!/bin/bash
 
+python project/Code.py
 python project/Tests.py
-ls -l
-cd data && ls -l
