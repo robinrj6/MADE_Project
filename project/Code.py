@@ -1,6 +1,7 @@
 import py7zr
 import requests
 import pandas as pd
+import os
 
 from Tests import run_tests
 
@@ -18,6 +19,7 @@ def interpretData(df, column_names):
 
 # Function to load data into a database
 def load(table_name, sheet):
+    os.getcwd()
     sheet.to_sql(table_name, 'sqlite:///../data/Store.sqlite',
                  if_exists='replace', index=False)
 
