@@ -17,7 +17,6 @@ def interpretData(df, column_names):
 
 # Function to load data into a database
 def load(table_name, sheet):
-    print(os.getcwd())
     sheet.to_sql(table_name, 'sqlite:///../data/Store.sqlite',
                  if_exists='replace', index=False)
 
